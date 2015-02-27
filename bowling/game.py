@@ -1,6 +1,7 @@
 from .frame import Frame
 from pprint import pprint
 
+
 class Game(object):
 
     def __init__(self):
@@ -17,11 +18,20 @@ class Game(object):
     def roll(self, pins):
         # f is the last frame from the list of frames
         f = self._frames[-1]
+
+        # only 10 frames allowed
         if self._frame_index == 10:
             return True
 
         if not f.completed:
             print 'Frame not completed'
+
+            if pins + f.frame_score > 10:
+                raise Exception("Frame pins summary exceeds 10")
+
+            if pins > 10:
+                raise Exception("Pins in a single throw exceed 10")
+
             f.roll_once(pins)
             self._frames[-1] = f
         else:

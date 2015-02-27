@@ -19,6 +19,41 @@ class GameTest(unittest.TestCase):
         self.game.roll(3)
         print self.game
 
+    def test_only_10_frames_allowed(self):
+        self.game.roll(10)
+        self.game.roll(10)
+        self.game.roll(10)
+        self.game.roll(10)
+        self.game.roll(10)
+        self.game.roll(10)
+        self.game.roll(10)
+        self.game.roll(10)
+        self.game.roll(10)
+        self.game.roll(10)
+        self.game.roll(10)
+        self.game.roll(7)
+        print self.game
+
+    def test_only_10_pins_per_frame(self):
+        self.game.roll(1)
+        try:
+            self.game.roll(10)
+        except Exception as e:
+            print ("Wrong number entered, please enter a different number of pins!")
+
+        self.game.roll(2)
+        print self.game
+
+    def test_only_10_pins_per_roll(self):
+        try:
+            self.game.roll(11)
+        except Exception as e:
+            print ("There should be 0 to 10 pins per roll!")
+
+        self.game.roll(2)
+        print self.game
+
+
     def test_calculate_score(self):
         self.game.roll(2)
         self.game.roll(8)
