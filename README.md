@@ -5,7 +5,14 @@ This repository contains the codebase for the Technical Assessment as a preparat
 
 ## Overview
 
-The program allows to keep score of a bowling game for up to 6 people.
+The program is a scoreboard that allows to keep score of a bowling game for up to 6 people.
+
+### There are several symbols used when keeping score:
+* an "X" signifies a "strike" in which 10 pins have been knocked down by the first roll of the ball in a frame
+* a "/" signifies a "spare" in which all 10 pins have been knocked down on the second roll in a frame
+* a "-" indicates that no pins were knocked down on that roll, called a "miss"
+
+
 
 ## Pre-requisites
 

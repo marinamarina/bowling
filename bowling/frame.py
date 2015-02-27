@@ -8,11 +8,15 @@ class Frame(object):
     def __init__(self, frame_index=0):
 
         self.rolls = []
+        self.score = 0
         self.frame_index = frame_index
 
     def roll_once(self, pins):
         """Roll once!"""
         self.rolls.append(pins)
+
+    '''def strike_score(self):
+        return self.frame_score +'''
 
     @property
     def completed(self):
@@ -41,6 +45,14 @@ class Frame(object):
         :return: True if the frame is a spare
         """
         return len(self.rolls) == 2 and self.frame_score == 10
+
+    @property
+    def is_miss(self):
+        """
+        :rtype: bool
+        :return: True if the frame is a miss (no pins have been knocked down)
+        """
+        return self.frame_score == 0
 
     def __repr__(self):
         return '<Frame> rolls: {}'.format(

@@ -10,13 +10,23 @@ class GameTest(unittest.TestCase):
 
     def test_add_frame(self):
         self.game.roll(2)
-        self.game.roll(10)
+        self.game.roll(8)
         self.game.roll(3)
         self.game.roll(3)
         self.game.roll(10)
+        self.game.roll(3)
+        self.game.roll(6)
         self.game.roll(3)
         print self.game
 
+    def test_calculate_score(self):
+        self.game.roll(2)
+        self.game.roll(8)
+        self.game.roll(3)
+        self.game.roll(3)
+        print "This is the game"
+        print self.game
+        print self.game.calculate_score()
 
     """def test_all_ones(self):
         self.game.roll_many(3, 20)
