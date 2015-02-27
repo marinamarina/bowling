@@ -9,7 +9,7 @@ class Game(object):
         self._frames = [self._add_frame()]
         self._max_frame_count = 10
         self._frame_index = 1
-        self._current_frame = self._frames[-1] if self._frames else None
+        self._current_frame = self._frames[-1]
 
     def _add_frame(self):
         return Frame()
@@ -24,26 +24,14 @@ class Game(object):
             print 'Not completed'
             f.roll_once(pins)
             self._frames[-1] = f
+
         else:
             print 'Completed, add a new frame'
             f = Frame()
             f.roll_once(pins)
             self._frames.append(f)
-
-
-        """ frame = Frame()
-
-            #increment frames index
+            # increment the frame index
             self._frame_index += 1
-            frame.roll_once(pins)
-            print frame
-            #self._rolls.extend(frame)
-        else:
-            frame = self._current_frame
-            frame.roll_once(pins)
-            print frame"""
-
-
 
     def play(self):
         #create a new frame?
