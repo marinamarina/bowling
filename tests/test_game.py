@@ -38,7 +38,7 @@ class GameTest(unittest.TestCase):
         self.game.roll(1)
         try:
             self.game.roll(10)
-        except Exception as e:
+        except ValueError as e:
             print ("Wrong number entered, please enter a different number of pins!")
 
         self.game.roll(2)
@@ -47,55 +47,34 @@ class GameTest(unittest.TestCase):
     def test_only_10_pins_per_roll(self):
         try:
             self.game.roll(11)
-        except Exception as e:
+        except ValueError as e:
             print ("There should be 0 to 10 pins per roll!")
 
         self.game.roll(2)
         print self.game
 
-
-    def test_calculate_score(self):
-        self.game.roll(2)
-        self.game.roll(8)
-        self.game.roll(3)
-        self.game.roll(3)
-        print "This is the game"
-        print self.game
-        print self.game.calculate_score()
-
-    """def test_all_ones(self):
-        self.game.roll_many(3, 20)
-
-        self.assertEqual(self.game.score(), 60)
-        print self.game
-
-    def test_one_strike(self):
+    def test_calculate_game_score(self):
+        self.game.roll(10)
         self.game.roll(10)
         self.game.roll(4)
-        self.game.roll(3)
-        self.game.roll_many(0, 17)
-        self.assertEqual(self.game.score(), 24)
-        print self.game
+        self.game.roll(2)
+        self.assertEqual(self.game.calculate_game_score()[-1], 46, "Cumulated score for the three frames")
 
-    def test_one_spare(self):
-        self.game.roll(6)
-        self.game.roll(4)
-        self.game.roll(3)
-        self.game.roll_many(0, 17)
-        self.assertEqual(self.game.score(), 16)
-        print self.game
+        self.assertEqual(len(self.game.calculate_game_score()), 3, "Three frames in that game")
 
-    def test_roll_many(self):
-        #self.assertTrue()
-        print("----TESTING ROLL MANY-----")
-        self.game.roll_many(1, 20)
-        print self.game
 
+    def roll_many(self, pins, times):
+        for t in range(0, times + 1):
+
+            self.game.roll(pins)
 
     def test_perfect_game(self):
-        self.game.roll_many(10, 12)
-        self.assertEqual(self.game.score(), 300)
-        print self.game"""
+        pass
+        #print self.game.calculate_game_score()
+        #self.assertEqual(self.game.calculate_game_score(), 300)
+
+        print self.game
+        print self.game.calculate_game_score()
 
     def tearDown(self):
         self.game = None

@@ -3,7 +3,7 @@ from collections import namedtuple
 
 
 class Frame(object):
-    """Represents a frame in the game of bowling"""
+    """Represents a frame in a game of ten-pin bowling"""
 
     def __init__(self, frame_index=0):
 
@@ -12,11 +12,8 @@ class Frame(object):
         self.frame_index = frame_index
 
     def roll_once(self, pins):
-        """Roll once!"""
+        """Roll it!"""
         self.rolls.append(pins)
-
-    '''def strike_score(self):
-        return self.frame_score +'''
 
     @property
     def completed(self):
