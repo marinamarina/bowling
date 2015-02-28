@@ -1,4 +1,5 @@
 from .frame import Frame
+from .frame_last import FrameLast
 from pprint import pprint
 
 
@@ -11,7 +12,6 @@ class Game(object):
 
         self._max_frame_count = 10
         self._frame_index = 1
-        self._current_frame = self._frames[-1]
 
     def _add_frame(self):
         return Frame()
@@ -25,27 +25,35 @@ class Game(object):
             return True
 
         if not f.completed:
-            print 'Frame not completed'
 
-            if pins + f.frame_score > 10:
+            if not f.is_last and pins + f.frame_score > 10:
                 raise ValueError("Frame pins summary exceeds 10")
 
             if pins > 10:
                 raise ValueError("Pins in a single throw exceed 10")
 
+            #if f.is_last and f.is_spare:
+
             f.roll_once(pins)
             self._frames[-1] = f
         else:
-            print 'Completed, add a new frame'
-            f = Frame()
+            if self._frame_index == 9:
+                f = FrameLast()
+                print "LAST FRAME ADDED! Completed? %r" % f.completed
+            else:
+                f = Frame()
+
             f.roll_once(pins)
             self._frames.append(f)
             # increment the frame index
             self._frame_index += 1
 
 
-    # TODO record results in a cumulative way
-    # output symbols strike/spare, etc.
+    # TODO output symbols strike/spare, etc.
+
+    def calculate_turn_score(self):
+        pass
+
 
     def calculate_game_score(self):
 
@@ -53,9 +61,6 @@ class Game(object):
 
         # creating list of lists from the list of frames
         game_rolls2d = [f.rolls for f in self._frames]
-
-        # flattenning the rolls 2d list
-        game_rolls = sum(game_rolls2d, [])
 
         # that's how I can get the frame number, no need to store it in fields?
         for f_index, f in enumerate(self._frames):

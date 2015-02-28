@@ -1,19 +1,19 @@
 from collections import namedtuple
-#roll, frame, scoreboard
-
 
 class Frame(object):
     """Represents a frame in a game of ten-pin bowling"""
 
-    def __init__(self, frame_index=0):
-
+    def __init__(self):
         self.rolls = []
         self.score = 0
-        self.frame_index = frame_index
 
     def roll_once(self, pins):
         """Roll it!"""
         self.rolls.append(pins)
+
+    @property
+    def is_last(self):
+        return False
 
     @property
     def completed(self):
@@ -25,7 +25,7 @@ class Frame(object):
         :rtype: int
         :return: Returns total score for the frame
         """
-        return sum(self.rolls)
+        return sum(self.rolls[0:2])
 
     @property
     def is_strike(self):
@@ -33,7 +33,7 @@ class Frame(object):
         :rtype: bool
         :return: True if the frame is a strike
         """
-        return len(self.rolls) == 1 and self.frame_score == 10
+        return self.completed and self.rolls[0] == 10
 
     @property
     def is_spare(self):
@@ -41,7 +41,9 @@ class Frame(object):
         :rtype: bool
         :return: True if the frame is a spare
         """
-        return len(self.rolls) == 2 and self.frame_score == 10
+
+        return self.completed and sum(self.rolls[0:2]) == 10
+
 
     @property
     def is_miss(self):
@@ -52,6 +54,6 @@ class Frame(object):
         return self.frame_score == 0
 
     def __repr__(self):
-        return '<Frame> rolls: {}'.format(
+        return '<Frame> rolls : {}'.format(
             self.rolls
-            )
+        )
