@@ -19,19 +19,18 @@ class Game(object):
     def _add_last_frame(self):
         return FrameLast()
 
-    def _score_decorator(func):
+    def _score_calculator(func):
 
         def wrapper(self, *args):
             #do something before the roll
             func( self, *args)
             #do something after the roll
             if self._frames[-1].completed:
-                # dummy score
-                # TODO calculate real score
-                self._scoreboard.append(1)
+                # calculate score after the end of each frame
+                self.calculate_frame_score()
         return wrapper
 
-    @_score_decorator
+    #@_score_calculator
     def roll(self, pins):
 
         # f is the last frame from the list of frames
@@ -61,54 +60,65 @@ class Game(object):
             # increment the frame index
             self._frame_index += 1
 
-    # TODO output symbols strike/spare, etc.
-    def calculate_frame_score(self):
-        results = []
-
-        # creating list of lists from the list of frames
-        game_rolls2d = [f.rolls for f in self._frames]
-        prev_score = results[-1] if results else 0
-
-        # frames so far
-        for f_index, f in enumerate(self._frames):
-            f_score = f.frame_score
-            results.append(prev_score + f_score)
-
-        return results
-
-    def calculate_game_score(self):
-        results = []
-
-        # creating list of lists from the list of frames
-        game_rolls2d = [f.rolls for f in self._frames]
-         # that's how I can get the frame number, no need to store it in fields?
-        for f_index, f in enumerate(self._frames):
-
-            f_score = f.frame_score
-            following_frames_2d = game_rolls2d[f_index + 1:]
-            following_frames_flat = sum(following_frames_2d, [])
-
-        # that's how I can get the frame number, no need to store it in fields?
-        for f_index, f in enumerate(self._frames):
-
-            f_score = f.frame_score
-            following_frames_2d = game_rolls2d[f_index + 1:]
-            following_frames_flat = sum(following_frames_2d, [])
-
-            if f.is_strike:
-                bonus = following_frames_flat[0] + following_frames_flat[1]
-            elif f.is_spare:
-                bonus = following_frames_flat[0]
+    def bonus(self, frame, following_rolls, pos):
+        if following_rolls:
+            if frame.is_strike:
+                return self.strike_bonus(following_rolls)
+            elif frame.is_spare:
+                print "2"
+                return self.spare_bonus(following_rolls)
             else:
+                return 0
+        else:
+            return 0
+
+    def spare_bonus(self, following_rolls):
+        return following_rolls[0]
+
+    def strike_bonus(self, following_rolls):
+        return following_rolls[0] + following_rolls[1]
+
+    def calculate_frame_score(self):
+        # creating list of lists from the list of frames
+        game_rolls2d = [f.rolls for f in self._frames]
+        self._scoreboard = []
+
+        for f_index, f in enumerate(self._frames):
+
+            f_score = f.frame_score
+            following_rolls_2d = game_rolls2d[f_index + 1:]
+            following_rolls_flat = sum(following_rolls_2d, [])
+
+            bonus = 0
+            prev_score = self._scoreboard[-1] if self._scoreboard else 0
+
+            if f.is_spare:
+                bonus = following_rolls_flat[0] if following_rolls_flat else 0
+
+            """if f.is_strike:
+                bonus = sum(following_rolls_flat[0:2]) if following_rolls_flat else 0"""
+
+            if not f.is_strike and not f.is_spare:
                 bonus = 0
 
-            prev_score = results[-1] if results else 0
-
-            results.append(prev_score + f_score + bonus)
-        return results
+            # do not display the score until it is possible to calculate the bonus
+            if f.is_strike:
+                try:
+                    bonus = following_rolls_flat[0] + following_rolls_flat[1]
+                    self._scoreboard.append(f_score + prev_score + bonus)
+                except IndexError:
+                    self._scoreboard.append("-")
+            elif f.is_spare:
+                try:
+                    bonus = following_rolls_flat[0]
+                    self._scoreboard.append(f_score + prev_score + bonus)
+                except IndexError:
+                    self._scoreboard.append("-")
+            else:
+                self._scoreboard.append(f_score + prev_score + bonus)
 
     def __repr__(self):
-        return '<Game> frames: {0} Frame Index: {1} \n Scoreboard: {2} \n'.format(
+        return '<Game> frames: {0} Frame Index: {1} \nScoreboard: {2} \n'.format(
             [f.rolls for f in self._frames],
             self._frame_index,
             self._scoreboard

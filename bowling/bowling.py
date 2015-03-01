@@ -51,7 +51,6 @@ class Bowling(object):
         for p in self.players:
             print p.name + "'s turn:"
 
-
     def __repr__(self):
         return '<Bowling> players {}'.format(
             self.players

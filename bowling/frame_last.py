@@ -1,6 +1,5 @@
 from .frame import Frame
 
-
 class FrameLast(Frame):
     """Represents the 10th frame in a game of ten-pin bowling"""
 
