@@ -1,5 +1,6 @@
 from .frame import Frame
 
+
 class FrameLast(Frame):
     """Represents the 10th frame in a game of ten-pin bowling"""
 
@@ -17,14 +18,20 @@ class FrameLast(Frame):
 
     @Frame.completed.getter
     def completed(self):
-
+        """
+        :rtype: bool
+        :return: Returns true if the frame was completed
+        """
         if sum(self.rolls[0:2]) < 10:
+            # standard frame
             return self.length == 2
 
         elif self.length == 3 and sum(self.rolls[0:2]) == 10:
+            # spare
             return True
 
         if self.length == 3 and self.rolls[0] == 10:
+            # strike
             return True
 
     def __repr__(self):

@@ -17,6 +17,10 @@ class Frame(object):
 
     @property
     def completed(self):
+        """
+        :rtype: bool
+        :return: Returns true if the frame was completed
+        """
         return sum(self.rolls) == 10 or len(self.rolls) == 2
 
     @property
@@ -41,7 +45,6 @@ class Frame(object):
         :rtype: bool
         :return: True if the frame is a spare
         """
-
         return self.completed and sum(self.rolls[0:2]) == 10
 
 

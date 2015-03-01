@@ -60,6 +60,16 @@ class GameTest(unittest.TestCase):
 
         self.assertEqual(len(self.game.calculate_game_score()), 3, "Three frames in that game")
 
+    def test_calculate_frame_score(self):
+
+        self.game.roll(2)
+        self.game.roll(3)
+        self.game.roll(4)
+        self.game.roll(2)
+        #self.assertEqual(self.game.calculate_game_score()[-1], 46, "Cumulated score for the three frames in the game")
+
+        #self.assertEqual(len(self.game.calculate_game_score()), 3, "Three frames in that game")
+
     def test_last_frame_spare(self):
         self.roll_many(0,18)
         self.game.roll(1)
@@ -68,10 +78,6 @@ class GameTest(unittest.TestCase):
         self.assertEqual(len(self.game._frames), 10, "Ten frames in that game")
         self.assertTrue(len(self.game._frames[-1].rolls) == 3, "Last frame's length is 3")
         self.assertTrue(self.game._frames[-1].is_spare, "Last frame is spare")
-        print self.game._frames[-1].is_spare
-
-        from pprint import pprint
-        pprint(self.game)
 
     def test_last_frame_strike(self):
         self.roll_many(0,18)
@@ -81,10 +87,15 @@ class GameTest(unittest.TestCase):
         self.assertEqual(len(self.game._frames), 10, "Ten frames in that game")
         self.assertTrue(len(self.game._frames[-1].rolls) == 3, "Last frame's length is 3")
         self.assertTrue(self.game._frames[-1].is_strike, "Last frame is strike")
-        print self.game._frames[-1].is_strike
 
-        from pprint import pprint
-        pprint(self.game)
+
+    def test_additional_test(self):
+        self.roll_many(0,18)
+        self.game.roll(10)
+        self.game.roll(9)
+        self.game.roll(9)
+        print "\n"
+        print self.game
 
     @unittest.skip("skip")
     def test_perfect_game(self):
