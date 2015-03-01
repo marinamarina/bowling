@@ -21,10 +21,10 @@ class Player(object):
 
     @property
     def final_score(self):
-         return self._final_score
+        return self._final_score
 
     def __repr__(self):
         return '<Player> name: {0}, final_score: {1}'.format(
             self.name,
             self._final_score
-            )
+        )

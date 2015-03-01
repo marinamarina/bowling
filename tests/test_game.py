@@ -94,8 +94,8 @@ class GameTest(unittest.TestCase):
         self.game.roll(10)
         self.game.roll(9)
         self.game.roll(9)
-        print "\n"
-        print self.game
+        print ("\n")
+        print (self.game)
 
     @unittest.skip("skip")
     def test_perfect_game(self):
