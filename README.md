@@ -1,5 +1,10 @@
 [![Build Status](https://travis-ci.org/marinamarina/bowling.svg?branch=master)](https://travis-ci.org/marinamarina/bowling)
 
+Temporarily for a private repo:
+[![Build Status](https://magnum.travis-ci.com/marinamarina/bowling.svg?token=mjEQw6pBznfzG3bFcBry?branch=master)](https://magnum.travis-ci.com/marinamarina/bowling.svg?token=mjEQw6pBznfzG3bFcBry)
+
+
+
 # Ten-pin bowling
 This repository contains the codebase for the Technical Assessment as a preparation for the technical assessment session
 
