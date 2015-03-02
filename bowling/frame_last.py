@@ -25,7 +25,6 @@ class FrameLast(Frame):
             return 10
         return super(FrameLast, self).frame_score
 
-
     @Frame.completed.getter
     def completed(self):
         """

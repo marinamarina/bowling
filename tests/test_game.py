@@ -37,19 +37,19 @@ class GameTest(unittest.TestCase):
         try:
             self.game.roll(10)
         except ValueError as e:
-            self.assertTrue(self.game._frames[-1].frame_score == 1, "Invalid roll has been ignored")
+            self.assertTrue(self.game.current_frame.frame_score == 1, "Invalid roll has been ignored")
 
         self.game.roll(2)
-        self.assertTrue(self.game._frames[-1].frame_score == 3, "Invalid roll has been ignored")
+        self.assertTrue(self.game.current_frame.frame_score == 3, "Invalid roll has been ignored")
 
     def test_only_10_pins_per_roll(self):
         try:
             self.game.roll(11)
         except ValueError as e:
-            self.assertTrue(self.game._frames[-1].frame_score == 0, "Invalid roll has been ignored")
+            self.assertTrue(self.game.current_frame.frame_score == 0, "Invalid roll has been ignored")
 
         self.game.roll(2)
-        self.assertTrue(self.game._frames[-1].frame_score == 2, "Invalid roll has been ignored")
+        self.assertTrue(self.game.current_frame.frame_score == 2, "Invalid roll has been ignored")
 
     def test_frame_length(self):
         self.game.roll(10)
@@ -61,25 +61,25 @@ class GameTest(unittest.TestCase):
     def test_frame_score_spare(self):
         self.game.roll(1)
         self.game.roll(9)
-        self.assertEqual(self.game._scoreboard[0], '-', "First frame, no score yet! Waiting for the bonus...")
+        self.assertEqual(self.game.scoreboard[0], '-', "First frame, no score yet! Waiting for the bonus...")
 
         self.game.roll(1)
         self.game.roll(1)
-        self.assertEqual(self.game._scoreboard[0], 11, "First frame score updated, with added bonus")
-        self.assertEqual(self.game._scoreboard[1], 13, "Second frame cumulated score")
-
-        self.game.roll(1)
-        self.game.roll(9)
-        self.assertEqual(self.game._scoreboard[0], 11, "First frame score")
-        self.assertEqual(self.game._scoreboard[1], 13, "Second frame score")
-        self.assertEqual(self.game._scoreboard[2], '-', "Third frame, no score yet! Waiting for the bonus...")
+        self.assertEqual(self.game.scoreboard[0], 11, "First frame score updated, with added bonus")
+        self.assertEqual(self.game.scoreboard[1], 13, "Second frame cumulated score")
 
         self.game.roll(1)
         self.game.roll(9)
-        self.assertEqual(self.game._scoreboard[0], 11, "First frame score")
-        self.assertEqual(self.game._scoreboard[1], 13, "Second frame score")
-        self.assertEqual(self.game._scoreboard[2], 24, "Third frame, score with the added bonus")
-        self.assertEqual(self.game._scoreboard[3], '-', "Fourth frame, score with the added bonus")
+        self.assertEqual(self.game.scoreboard[0], 11, "First frame score")
+        self.assertEqual(self.game.scoreboard[1], 13, "Second frame score")
+        self.assertEqual(self.game.scoreboard[2], '-', "Third frame, no score yet! Waiting for the bonus...")
+
+        self.game.roll(1)
+        self.game.roll(9)
+        self.assertEqual(self.game.scoreboard[0], 11, "First frame score")
+        self.assertEqual(self.game.scoreboard[1], 13, "Second frame score")
+        self.assertEqual(self.game.scoreboard[2], 24, "Third frame, score with the added bonus")
+        self.assertEqual(self.game.scoreboard[3], '-', "Fourth frame, score with the added bonus")
 
     def test_last_frame_spare(self):
         self.roll_many(0, 18)
@@ -89,9 +89,10 @@ class GameTest(unittest.TestCase):
         # dummy roll that would not be added due to validation
         self.game.roll(9)
         self.assertEqual(len(self.game._frames), 10, "There are ten frames in that game")
-        self.assertTrue(len(self.game._frames[-1].rolls) == 3, "Last frame's length is 3")
-        self.assertTrue(self.game._frames[-1].is_spare, "Last frame is spare")
-        self.assertEqual(self.game._scoreboard[-1], 19, "Last frame score is calculated correctly")
+        self.assertTrue(len(self.game.current_frame.rolls) == 3, "Last frame's length is 3")
+        self.assertTrue(self.game.current_frame.is_spare, "Last frame is spare")
+        self.assertEqual(self.game.scoreboard[-1], 19, "Last frame score is calculated correctly")
+        self.assertTrue(self.game.completed, "Game has been completed")
 
     def test_frame_score_strike(self):
         self.game.roll(0)
@@ -100,11 +101,11 @@ class GameTest(unittest.TestCase):
         self.roll_many(3,2)
         # dummy roll that would not be added due to validation
         self.game.roll(9)
-        self.assertEqual(self.game._scoreboard[-1], 249, "Last frame score")
+        self.assertEqual(self.game.scoreboard[-1], 249, "Last frame score")
 
     def test_perfect_game(self):
         self.roll_many(10,12)
-        self.assertEqual(self.game._scoreboard[-1], 300)
+        self.assertEqual(self.game.scoreboard[-1], 300)
 
     def roll_many(self, pins, times):
         for t in range(0, times):

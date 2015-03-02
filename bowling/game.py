@@ -30,23 +30,24 @@ class Game(object):
             #do something before the roll
             func( self, *args)
             # update the scoreboard ONLY once the frame has been completed
-            if self._frames[-1].completed:
+            if self.current_frame.completed:
                 # calculate score after the end of each frame
                 self.calculate_frame_score()
+                print self
         return wrapper
 
     @update_scoreboard
     def roll(self, pins):
 
         # f is the last frame from the list of frames
-        f = self._frames[-1]
+        f = self.current_frame
+
 
         # only 10 frames allowed
-        if self._frame_index == self._max_frame_count and self._frames[-1].completed:
+        if self._frame_index == self._max_frame_count and self.current_frame.completed:
             return True
 
         if not f.completed:
-
             if not f.is_last and pins + f.frame_score > 10:
                 raise ValueError("Frame pins summary exceeds 10")
 
@@ -65,32 +66,12 @@ class Game(object):
             # increment the frame index
             self._frame_index += 1
 
-    def bonus(self, frame, following_rolls, pos):
-        if following_rolls:
-            if frame.is_strike:
-                return self.strike_bonus(following_rolls)
-            elif frame.is_spare:
-                print "2"
-                return self.spare_bonus(following_rolls)
-            else:
-                return 0
-        else:
-            return 0
-
-    def spare_bonus(self, following_rolls):
-        return following_rolls[0]
-
-    def strike_bonus(self, following_rolls):
-        return following_rolls[0] + following_rolls[1]
-
     def calculate_frame_score(self):
         # creating list of lists from the list of frames
         game_rolls2d = [f.rolls for f in self._frames]
         self._scoreboard = []
 
         for f_index, f in enumerate(self._frames):
-
-
             following_rolls_2d = game_rolls2d[f_index + 1:]
             following_rolls_flat = sum(following_rolls_2d, [])
 
@@ -98,20 +79,10 @@ class Game(object):
             f_score = f.frame_score
             prev_score = self._scoreboard[-1] if self._scoreboard else 0
 
-            if f.is_last:
-                bonus =  f.rolls[-1]
-
-
-            if f.is_spare:
-                bonus = following_rolls_flat[0] if following_rolls_flat else 0
-
             if not f.is_strike and not f.is_spare:
                 bonus = 0
 
-            # do not display the score until it is possible to calculate the bonus
-
             if f.is_strike:
-
                 try:
                     bonus = sum(f.rolls[-2::]) if f.is_last else following_rolls_flat[0] + following_rolls_flat[1]
                     self._scoreboard.append(f_score + prev_score + bonus)
@@ -127,10 +98,55 @@ class Game(object):
             else:
                 self._scoreboard.append(f_score + prev_score + bonus)
 
+    @property
+    def current_frame(self):
+        return self._frames[self.frame_index - 1]
+
+    @property
+    def frame_index(self):
+        return self._frame_index
+
+    @frame_index.setter
+    def frame_index(self, v):
+        self._frame_index = v
+
+    @property
+    def scoreboard(self):
+        return self._scoreboard
+
+
+    """def particular_frame_completed(self):
+
+        Game completed
+        :return:
+        :type: bool
+
+        return self._frame_index == 10 and self.current_frame.completed"""
+
+    @property
+    def completed(self):
+        """
+        Game completed
+        :return:
+        :type: bool
+        """
+
+        return self._frame_index == 10 and self.current_frame.completed
+
+    @property
+    def total_score(self):
+        """
+        Total score of a game
+        :return:
+        :type: int
+        """
+        return self.scoreboard[-1]
+
+
     def __repr__(self):
         return '<Game> frames: {0} Frame Index: {1} \nScoreboard: {2} \n'.format(
             [f.rolls for f in self._frames],
-            self._frame_index,
-            self._scoreboard
+            self.frame_index,
+            self.scoreboard
         )
 

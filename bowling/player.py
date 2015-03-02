@@ -1,7 +1,8 @@
 class Player(object):
 
-    def __init__(self, name):
+    def __init__(self, name, game):
         self._name = name
+        self.game = game
 
     @property
     def name(self):

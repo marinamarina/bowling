@@ -3,8 +3,7 @@ from bowling.bowling import Bowling
 
 
 def main():
-    g = Game()
-    b = Bowling(g)
+    b = Bowling()
     b.play()
     print b
 

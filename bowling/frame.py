@@ -23,6 +23,7 @@ class Frame(object):
         """
         return sum(self.rolls) == 10 or len(self.rolls) == 2
 
+
     @property
     def frame_score(self):
         """
