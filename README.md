@@ -20,6 +20,7 @@ The program is a scoreboard that allows to keep score of a bowling game for up t
 
 ## Pre-requisites
 
+* No dependencies
 * Python (version >= 2.7)
 
 ## Installation
@@ -39,5 +40,16 @@ Run the unit tests:
 Python version 2.7 or earlier `python -m unittest discover`
 Python version 3.1 or earlier `python3 -m discover`
 Python version 3.2 or earlier `python3 -m unittest discover`
+
+## TODO
+
+* Improve validation on 2nd roll of frame to ensure can only bowl as many remamining pins.
+	* or simulate real life where machine may incorrectly rerack, and allow a spare.
+	* show the remaining pin count on the prompt
+* Improve scoreboard layout
+	* Show in boxout
+	* Show separate player total rather than just last entry in running total
+	* Show X for strike and / for spare
+* Use ansi colouring for error/result messages
 
 Or just leave it to Travis (Every push will also trigger a new build on Travis CI).

@@ -5,7 +5,7 @@ prompt = '> '
 
 
 class Bowling(object):
-    """Bowling game. """
+    """Bowling game. The class takes care of adding the users and running the game"""
 
     def __init__(self, game):
         self.game = game

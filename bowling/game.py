@@ -98,6 +98,10 @@ class Game(object):
             f_score = f.frame_score
             prev_score = self._scoreboard[-1] if self._scoreboard else 0
 
+            if f.is_last:
+                bonus =  f.rolls[-1]
+
+
             if f.is_spare:
                 bonus = following_rolls_flat[0] if following_rolls_flat else 0
 
@@ -105,15 +109,18 @@ class Game(object):
                 bonus = 0
 
             # do not display the score until it is possible to calculate the bonus
+
             if f.is_strike:
+
                 try:
-                    bonus = following_rolls_flat[0] + following_rolls_flat[1]
+                    bonus = sum(f.rolls[-2::]) if f.is_last else following_rolls_flat[0] + following_rolls_flat[1]
                     self._scoreboard.append(f_score + prev_score + bonus)
+
                 except IndexError:
                     self._scoreboard.append("-")
             elif f.is_spare:
                 try:
-                    bonus = following_rolls_flat[0]
+                    bonus = f.rolls[-1] if f.is_last else following_rolls_flat[0]
                     self._scoreboard.append(f_score + prev_score + bonus)
                 except IndexError:
                     self._scoreboard.append("-")

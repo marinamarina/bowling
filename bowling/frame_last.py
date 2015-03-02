@@ -15,6 +15,17 @@ class FrameLast(Frame):
     def length(self):
         return len(self.rolls)
 
+    @Frame.frame_score.getter
+    def frame_score(self):
+        """
+        :rtype: int
+        :return: Returns total score for the frame
+        """
+        if self.is_strike:
+            return 10
+        super(Frame, self).frame_score
+
+
     @Frame.completed.getter
     def completed(self):
         """
