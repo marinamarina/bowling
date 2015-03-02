@@ -8,7 +8,6 @@ class GameTest(unittest.TestCase):
     def setUp(self):
         self.game = Game()
 
-    @unittest.skip("")
     def test_add_frame(self):
         self.game.roll(2)
         self.game.roll(8)
@@ -19,7 +18,6 @@ class GameTest(unittest.TestCase):
         self.game.roll(6)
         self.game.roll(3)
 
-    @unittest.skip("")
     def test_only_10_frames_allowed(self):
         self.game.roll(10)
         self.game.roll(10)
@@ -34,7 +32,6 @@ class GameTest(unittest.TestCase):
         self.game.roll(10)
         self.game.roll(7)
 
-    @unittest.skip("")
     def test_only_10_pins_per_frame(self):
         self.game.roll(1)
         try:
@@ -45,7 +42,6 @@ class GameTest(unittest.TestCase):
         self.game.roll(2)
         self.assertTrue(self.game._frames[-1].frame_score == 3, "Invalid roll has been ignored")
 
-    @unittest.skip("")
     def test_only_10_pins_per_roll(self):
         try:
             self.game.roll(11)
@@ -55,7 +51,6 @@ class GameTest(unittest.TestCase):
         self.game.roll(2)
         self.assertTrue(self.game._frames[-1].frame_score == 2, "Invalid roll has been ignored")
 
-    @unittest.skip("")
     def test_frame_length(self):
         self.game.roll(10)
         self.game.roll(10)
@@ -63,7 +58,6 @@ class GameTest(unittest.TestCase):
         self.game.roll(2)
         self.assertEqual(self.game._frame_index, 3, "Three frames in that game")
 
-    @unittest.skip("")
     def test_frame_score_spare(self):
         self.game.roll(1)
         self.game.roll(9)
@@ -87,9 +81,8 @@ class GameTest(unittest.TestCase):
         self.assertEqual(self.game._scoreboard[2], 24, "Third frame, score with the added bonus")
         self.assertEqual(self.game._scoreboard[3], '-', "Fourth frame, score with the added bonus")
 
-    @unittest.skip("")
     def test_last_frame_spare(self):
-        self.roll_many(0,18)
+        self.roll_many(0, 18)
         self.game.roll(1)
         self.game.roll(9)
         self.game.roll(9)
@@ -111,7 +104,6 @@ class GameTest(unittest.TestCase):
 
     def test_perfect_game(self):
         self.roll_many(10,12)
-        print self.game
         self.assertEqual(self.game._scoreboard[-1], 300)
 
     def roll_many(self, pins, times):

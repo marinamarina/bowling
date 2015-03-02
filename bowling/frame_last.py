@@ -23,7 +23,7 @@ class FrameLast(Frame):
         """
         if self.is_strike:
             return 10
-        super(Frame, self).frame_score
+        return super(FrameLast, self).frame_score
 
 
     @Frame.completed.getter
