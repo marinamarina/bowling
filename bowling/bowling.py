@@ -3,7 +3,9 @@ from .player import Player
 
 prompt = '> '
 
+
 class Bowling(object):
+    """Bowling game. """
 
     def __init__(self, game):
         self.game = game

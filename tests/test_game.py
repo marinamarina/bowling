@@ -61,6 +61,7 @@ class GameTest(unittest.TestCase):
 
         self.assertEqual(len(self.game.calculate_frame_score()), 3, "Three frames in that game")
 
+    @unittest.skip("")
     def test_last_frame_spare(self):
         self.roll_many(0,18)
         self.game.roll(1)
@@ -70,8 +71,32 @@ class GameTest(unittest.TestCase):
         self.assertTrue(len(self.game._frames[-1].rolls) == 3, "Last frame's length is 3")
         self.assertTrue(self.game._frames[-1].is_spare, "Last frame is spare")
 
+    def test_frame_score_spare(self):
+        self.game.roll(1)
+        self.game.roll(9)
+        self.assertEqual(self.game._scoreboard[0], '-', "First frame, no score yet! Waiting for the bonus...")
+
+        self.game.roll(1)
+        self.game.roll(1)
+        self.assertEqual(self.game._scoreboard[0], 11, "First frame score updated, with added bonus")
+        self.assertEqual(self.game._scoreboard[1], 13, "Second frame cumulated score")
+
+        self.game.roll(1)
+        self.game.roll(9)
+        self.assertEqual(self.game._scoreboard[0], 11, "First frame score")
+        self.assertEqual(self.game._scoreboard[1], 13, "Second frame score")
+        self.assertEqual(self.game._scoreboard[2], '-', "Third frame, no score yet! Waiting for the bonus...")
+
+        self.game.roll(1)
+        self.game.roll(9)
+        self.assertEqual(self.game._scoreboard[0], 11, "First frame score")
+        self.assertEqual(self.game._scoreboard[1], 13, "Second frame score")
+        self.assertEqual(self.game._scoreboard[2], 24, "Third frame, score with the added bonus")
+        self.assertEqual(self.game._scoreboard[3], '-', "Fourth frame, score with the added bonus")
+
+    @unittest.skip("")
     def test_last_frame_strike(self):
-        self.roll_many(0,18)
+        self.roll_many(0, 18)
         self.game.roll(10)
         self.game.roll(9)
         self.game.roll(9)
@@ -80,67 +105,37 @@ class GameTest(unittest.TestCase):
         self.assertTrue(self.game._frames[-1].is_strike, "Last frame is strike")
 
     @unittest.skip("")
-    def test_frame_score_spare(self):
-        self.game.roll(1)
-        self.game.roll(9)
-        self.game.calculate_frame_score()
-
-        self.game.roll(1)
-        self.game.roll(1)
-        self.game.calculate_frame_score()
-
-        self.game.roll(1)
-        self.game.roll(9)
-        self.game.calculate_frame_score()
-        self.assertEqual(self.game._scoreboard[-1], 23, "Last frame cumulated score")
-
-        self.game.roll(1)
-        self.game.roll(9)
-        self.game.calculate_frame_score()
-        self.assertEqual(self.game._scoreboard[0], 11, "First frame cumulated score")
-        self.assertEqual(self.game._scoreboard[1], 13, "Second frame cumulated score")
-        self.assertEqual(self.game._scoreboard[2], 24, "Third frame cumulated score")
-        self.assertEqual(self.game._scoreboard[3], 34, "Last frame cumulated score")
-
     def test_frame_score_strike(self):
         self.game.roll(10)
-        self.game.calculate_frame_score()
-        print self.game
 
         self.game.roll(10)
-        self.game.calculate_frame_score()
-        print self.game
 
         self.game.roll(10)
-        self.game.calculate_frame_score()
-        print self.game
-
 
         self.game.roll(10)
-        self.game.calculate_frame_score()
-        print self.game
 
         self.game.roll(10)
-        self.game.calculate_frame_score()
-        print self.game
 
 
         self.game.roll(10)
         self.game.calculate_frame_score()
-        print self.game
+        self.assertEqual(self.game._scoreboard[0], 30, "First frame score")
+        self.assertEqual(self.game._scoreboard[4], '-', "Fifth frame score, no score yet! Waiting for the bonus...")
+        self.assertEqual(self.game._scoreboard[5], '-', "Sixth frame, no score yet! Waiting for the bonus...")
 
         self.game.roll(9)
         self.game.roll(1)
         self.game.calculate_frame_score()
-        print self.game
 
         self.game.roll(2)
         self.game.roll(1)
         self.game.calculate_frame_score()
-        print self.game
+        self.assertEqual(self.game._scoreboard[-1], 184, "Eighth frame score")
 
 
 
+
+    @unittest.skip("")
     def test_perfect_game(self):
         self.roll_many(10,12)
         self.game.calculate_frame_score()

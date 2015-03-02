@@ -19,18 +19,23 @@ class Game(object):
     def _add_last_frame(self):
         return FrameLast()
 
-    def _score_calculator(func):
+    def update_scoreboard(func):
+        """
+        Decorator that ensures the scoreboard is updated after the end of each frame
+        :param func: calculate_frame_score()
+        :return: wrapper
+        """
 
         def wrapper(self, *args):
             #do something before the roll
             func( self, *args)
-            #do something after the roll
+            # update the scoreboard ONLY once the frame has been completed
             if self._frames[-1].completed:
                 # calculate score after the end of each frame
                 self.calculate_frame_score()
         return wrapper
 
-    #@_score_calculator
+    @update_scoreboard
     def roll(self, pins):
 
         # f is the last frame from the list of frames
@@ -85,18 +90,16 @@ class Game(object):
 
         for f_index, f in enumerate(self._frames):
 
-            f_score = f.frame_score
+
             following_rolls_2d = game_rolls2d[f_index + 1:]
             following_rolls_flat = sum(following_rolls_2d, [])
 
             bonus = 0
+            f_score = f.frame_score
             prev_score = self._scoreboard[-1] if self._scoreboard else 0
 
             if f.is_spare:
                 bonus = following_rolls_flat[0] if following_rolls_flat else 0
-
-            """if f.is_strike:
-                bonus = sum(following_rolls_flat[0:2]) if following_rolls_flat else 0"""
 
             if not f.is_strike and not f.is_spare:
                 bonus = 0
