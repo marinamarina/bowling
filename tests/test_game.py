@@ -141,11 +141,10 @@ class GameTest(unittest.TestCase):
 
 
 
-
-    @unittest.skip("skip")
     def test_perfect_game(self):
-        pass
-        #print self.game.calculate_game_score()
+        self.roll_many(10,12)
+        self.game.calculate_frame_score()
+        print self.game
         #self.assertEqual(self.game.calculate_game_score(), 300)
 
     def roll_many(self, pins, times):
