@@ -27,9 +27,8 @@ Note: all of the commands in the rest of this README are relative to the root of
 
 Run the unit tests:
 
-Python version 2.7 or earlier `python -m unittest discover`
-Python version 3.1 or earlier `python3 -m discover`
-Python version 3.2 or earlier `python3 -m unittest discover`
+* Python version 2.7 or earlier `python -m unittest discover`
+* Python version 3.2 or earlier `python3 -m unittest discover`
 
 Or just leave it to Travis (Every push will also trigger a new build on Travis CI).
 
