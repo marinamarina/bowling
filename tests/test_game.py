@@ -107,20 +107,6 @@ class GameTest(unittest.TestCase):
         self.roll_many(10,12)
         self.assertEqual(self.game.scoreboard[-1], 300)
 
-    def test_another_one(self):
-        try:
-            self.game.roll(90)
-        except ValueError:
-            print "Bad user!"
-
-        self.game.roll(1)
-        self.game.roll(3)
-        print "THIS IS IT"
-        print self.game
-
-        #self.assertEqual(self.game.scoreboard[0], '-', "First frame, no score yet! Waiting for the bonus...")
-
-
     def roll_many(self, pins, times):
         for t in range(0, times):
             self.game.roll(pins)
