@@ -33,7 +33,7 @@ class Game(object):
             if self.current_frame.completed:
                 # calculate score after the end of each frame
                 self.calculate_frame_score()
-                print self
+                print (self)
         return wrapper
 
     @update_scoreboard

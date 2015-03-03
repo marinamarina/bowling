@@ -19,11 +19,11 @@ class Bowling(object):
         :param name: Player's name
         """
         if any(name == p.name for p in self.players):
-            print "There is a player with this name in the game already. Please, choose a different name."
+            print ("There is a player with this name in the game already. Please, choose a different name.")
         else:
             p = Player(name, Game())
             self.players.append(p)
-            print "Player " + name + " added!"
+            print ("Player " + name + " added!")
 
     def _print_frame_heading(self, player, frame_index):
         """
@@ -31,9 +31,9 @@ class Bowling(object):
         :param frame_index: frame index of the game
         :return:
         """
-        print colours.OKBLUE + colours.UNDERLINE + \
+        print (colours.OKBLUE + colours.UNDERLINE + \
                 "\n{0}'s turn. Frame {1}".format(player, frame_index)\
-                + colours.ENDC\
+                + colours.ENDC)
 
     def play(self):
         # making sure input works for Python 3 (converting to raw_input)
