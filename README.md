@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/marinamarina/bowling.svg?branch=master)](https://travis-ci.org/marinamarina/bowling)
+[![Build Status](https://travis-ci.org/marinamarina/ten-pin-bowling.svg?branch=master)](https://travis-ci.org/marinamarina/ten-pin-bowling)
 
 # Ten-pin bowling
 This repository contains the codebase for the Technical Assessment as a preparation for the technical assessment session
