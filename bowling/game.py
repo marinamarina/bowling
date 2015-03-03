@@ -42,7 +42,6 @@ class Game(object):
         # f is the last frame from the list of frames
         f = self.current_frame
 
-
         # only 10 frames allowed
         if self._frame_index == self._max_frame_count and self.current_frame.completed:
             return True
@@ -115,32 +114,12 @@ class Game(object):
     def scoreboard(self):
         return self._scoreboard
 
-
-    """def particular_frame_completed(self):
-
-        Game completed
-        :return:
-        :type: bool
-
-        return self._frame_index == 10 and self.current_frame.completed"""
-
     @property
     def completed(self):
-        """
-        Game completed
-        :return:
-        :type: bool
-        """
-
         return self._frame_index == 10 and self.current_frame.completed
 
     @property
     def total_score(self):
-        """
-        Total score of a game
-        :return:
-        :type: int
-        """
         return self.scoreboard[-1]
 
 

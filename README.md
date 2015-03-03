@@ -11,12 +11,6 @@ This repository contains the codebase for the Technical Assessment as a preparat
 
 The program is a scoreboard that allows to keep score of a bowling game for up to 6 people.
 
-### There are several symbols used when keeping score:
-* an "X" signifies a "strike" in which 10 pins have been knocked down by the first roll of the ball in a frame
-* a "/" signifies a "spare" in which all 10 pins have been knocked down on the second roll in a frame
-* a "-" indicates that no pins were knocked down on that roll, called a "miss"
-
-
 
 ## Pre-requisites
 
@@ -41,12 +35,11 @@ Python version 2.7 or earlier `python -m unittest discover`
 Python version 3.1 or earlier `python3 -m discover`
 Python version 3.2 or earlier `python3 -m unittest discover`
 
+Or just leave it to Travis (Every push will also trigger a new build on Travis CI).
+
+
 ## TODO
-* More validation on the user input for inputting the user names
 * Show the remaining pin count on the prompt
 * Improve scoreboard layout
 	* Show in boxout
 	* Show X for strike and / for spare
-* Use ansi colouring for error/result messages
-
-Or just leave it to Travis (Every push will also trigger a new build on Travis CI).

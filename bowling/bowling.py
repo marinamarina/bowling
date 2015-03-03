@@ -11,9 +11,13 @@ class Bowling(object):
     """Bowling! The class takes care of adding the users and running the game"""
 
     def __init__(self):
-        self.players = []
+        self._players = []
 
     def _add_player(self, name):
+        """
+        Add player to the bowling game.
+        :param name: Player's name
+        """
         if any(name == p.name for p in self.players):
             print "There is a player with this name in the game already. Please, choose a different name."
         else:
@@ -22,10 +26,14 @@ class Bowling(object):
             print "Player " + name + " added!"
 
     def _print_frame_heading(self, player, frame_index):
-        print colours.OKBLUE + \
+        """
+        :param player: player whos turn is to roll a ball
+        :param frame_index: frame index of the game
+        :return:
+        """
+        print colours.OKBLUE + colours.UNDERLINE + \
                 "\n{0}'s turn. Frame {1}".format(player, frame_index)\
                 + colours.ENDC\
-
 
     def play(self):
         # making sure input works for Python 3 (converting to raw_input)
@@ -40,11 +48,12 @@ class Bowling(object):
                 break
             self._add_player(i)
         print("---------------------------------------------------------------" )
-        print (colours.UNDERLINE + colours.HEADER + "\nLet's start the game!\n" \
+        print (colours.BOLD + colours.HEADER + "\nLET'S GO!\n" \
                               + colours.ENDC)
 
         for f in range(1, 11):
             for p in self.players:
+
                 self._print_frame_heading(p, f)
 
                 #f = 1, game_frame = 1
@@ -52,20 +61,25 @@ class Bowling(object):
                     i = input(colours.BOLD + colours.OKBLUE + "Pins: " + prompt + colours.ENDC)
                     try:
                         p.game.roll(int(i))
-                        print f, p.game.frame_index
                     except ValueError:
                         print (colours.ERROR + "\nPlease, do not cheat, user! This does not count ;-) Try again!\n"\
                                + colours.ENDC)
+                        continue
 
                     if p.game.current_frame.completed:
                         p.score = p.game.total_score
                         break
 
     @property
+    def players(self):
+        return self._players
+
+    @property
     def players_participating(self):
         return len(self.players)
 
     def __repr__(self):
+        # get the winner based on the highest score achieved
         winner = max(self.players, key=attrgetter('score'))
         winner_score = winner.score
 
