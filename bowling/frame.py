@@ -1,5 +1,3 @@
-from collections import namedtuple
-
 class Frame(object):
     """Represents a frame in a game of ten-pin bowling"""
 
@@ -9,7 +7,10 @@ class Frame(object):
 
     def roll_once(self, pins):
         """Roll it!"""
-        self.rolls.append(pins)
+        if pins > 10:
+                raise ValueError("Pins in a single throw exceed 10")
+        else:
+            self.rolls.append(pins)
 
     @property
     def is_last(self):
@@ -47,15 +48,6 @@ class Frame(object):
         :return: True if the frame is a spare
         """
         return self.completed and sum(self.rolls[0:2]) == 10
-
-
-    @property
-    def is_miss(self):
-        """
-        :rtype: bool
-        :return: True if the frame is a miss (no pins have been knocked down)
-        """
-        return self.frame_score == 0
 
     def __repr__(self):
         return '<Frame> rolls : {}'.format(

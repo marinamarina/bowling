@@ -2,24 +2,26 @@ class Player(object):
 
     def __init__(self, name, game):
         self._name = name
-        self.game = game
+        self._score = 0
+        self._game = game
 
     @property
     def name(self):
         return self._name
 
     @property
-    def turn(self):
-        return self._turn
+    def score(self):
+        return self._score
 
-    @turn.setter
-    def turn(self, turn):
-        if type(turn) is int:
-            self._turn = turn
-        else:
-            raise TypeError('{0} should be an integer!'.format(turn))
+    @score.setter
+    def score(self, v):
+        self._score = v
+
+    @property
+    def game(self):
+        return self._game
 
     def __repr__(self):
-        return '<Player> name: {0}'.format(
+        return '{0}'.format(
             self.name
         )

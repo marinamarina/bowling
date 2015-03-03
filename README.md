@@ -42,13 +42,10 @@ Python version 3.1 or earlier `python3 -m discover`
 Python version 3.2 or earlier `python3 -m unittest discover`
 
 ## TODO
-
-* Improve validation on 2nd roll of frame to ensure can only bowl as many remamining pins.
-	* or simulate real life where machine may incorrectly rerack, and allow a spare.
-	* show the remaining pin count on the prompt
+* More validation on the user input for inputting the user names
+* Show the remaining pin count on the prompt
 * Improve scoreboard layout
 	* Show in boxout
-	* Show separate player total rather than just last entry in running total
 	* Show X for strike and / for spare
 * Use ansi colouring for error/result messages
 

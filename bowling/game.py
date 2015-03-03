@@ -4,7 +4,7 @@ from pprint import pprint
 
 
 class Game(object):
-    """Represents a game of ten-pin bowling"""
+    """Represents one user's game in ten-pin bowling"""
 
     def __init__(self):
         #start with one frame in the list
@@ -51,11 +51,6 @@ class Game(object):
             if not f.is_last and pins + f.frame_score > 10:
                 raise ValueError("Frame pins summary exceeds 10")
 
-            if pins > 10:
-                raise ValueError("Pins in a single throw exceed 10")
-
-            #if f.is_last and f.is_spare:
-
             f.roll_once(pins)
             self._frames[-1] = f
         else:
@@ -63,12 +58,18 @@ class Game(object):
 
             f.roll_once(pins)
             self._frames.append(f)
+
             # increment the frame index
             self._frame_index += 1
 
     def calculate_frame_score(self):
+        """
+        :return:
+        """
         # creating list of lists from the list of frames
         game_rolls2d = [f.rolls for f in self._frames]
+
+        # clear the scoreboard before updating
         self._scoreboard = []
 
         for f_index, f in enumerate(self._frames):
