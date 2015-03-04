@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/marinamarina/ten-pin-bowling.svg?branch=master)](https://travis-ci.org/marinamarina/ten-pin-bowling)
 
 # Ten-pin bowling
-This repository contains the codebase for the Technical Assessment as a preparation for the BBC Digital Graduate assessment centre
+This repository contains the codebase for the Technical Assessment as a preparation for the BBC Digital Media Graduate Scheme assessment centre
 
 ## Overview
 
